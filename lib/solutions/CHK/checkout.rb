@@ -38,14 +38,15 @@ class Checkout
   end
 
   def checkout(skus)
-    sku_array = skus.split("").group_by { |sku| sku }
+    sku_hash = skus.split("").group_by { |sku| sku }
 
-    if sku_array.keys.all? { |sku| self.class.price_lookup.has_key?(sku) }
-      sku_array.map { |sku, v| price_for_item_quantity(sku, v.length) }.sum || 0
+    if sku_hash.keys.all? { |sku| self.class.price_lookup.has_key?(sku) }
+      sku_hash.map { |sku, v| price_for_item_quantity(sku, v.length) }.sum || 0
     else
       -1
     end
   end
 
 end
+
 
