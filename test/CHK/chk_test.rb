@@ -34,7 +34,20 @@ class ClientTest < Minitest::Test
     assert_equal(0, chk.price_for_item_quantity("D", -1))
   end
 
+  def test_checkout_for_arithmetic
+    chk = Checkout.new
+    expected = chk.price_for_item_quantity("A", 2) + chk.price_for_item_quantity("B", 1)
+    assert_equal(expected, chk.checkout("ABA"))
+  end
+
+  def test_checkout_for_unexpected_sku
+    chk = Checkout.new
+
+    assert_equal(50, chk.price_for_item_quantity("A", 1))
+  end
+
 end
+
 
 
 

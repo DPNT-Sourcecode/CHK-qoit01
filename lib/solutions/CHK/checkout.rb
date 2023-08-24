@@ -32,9 +32,9 @@ class Checkout
     base_price = self.class.price_lookup[item] * quantity
 
     applicable_discount = self.class.discounts[item]
-    discounts = applicable_discount[:discount] * (quantity / applicable_discount[:quantity]) if applicable_discount
+    discount = applicable_discount ? applicable_discount[:discount] * (quantity / applicable_discount[:quantity]) : 0
 
-    [base_price - (discounts || 0), 0].max
+    [base_price - discount, 0].max
   end
 
   def checkout(skus)
@@ -42,6 +42,7 @@ class Checkout
   end
 
 end
+
 
 
 
