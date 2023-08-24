@@ -23,7 +23,15 @@ class Checkout
   end
 
   def basket_discounts(sku_hash)
+    sku_hash = sku_hash.clone
     total_discount = 0
+
+    if sku_hash["E"] && sku_hash["B"]
+      max_b_to_remove = sku_hash["E"] / 2
+      b_to_remove = [max_b_to_remove, sku_hash["B"]].max
+      total_discount += b_to_remove * 30
+      sku_hash["B"] -= b_to_remove
+    end
 
     total_discount += 50 * (sku_hash["A"] / 5) if sku_hash["A"]
     total_discount += 20 * ((sku_hash["A"] % 5 ) / 3) if sku_hash["A"]
@@ -47,3 +55,4 @@ class Checkout
     end
   end
 end
+
