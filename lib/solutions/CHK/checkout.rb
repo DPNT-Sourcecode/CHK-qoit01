@@ -1,13 +1,6 @@
 # noinspection RubyUnusedLocalVariable
 class Checkout
 
-  # +------+-------+------------------------+
-  # | Item | Price | Special offers         |
-  # | S    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
-  # | T    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
-  # | X    | 17    | buy any 3 of (S,T,X,Y,Z) for 45 |
-  # | Y    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
-  # | Z    | 21    | buy any 3 of (S,T,X,Y,Z) for 45 |
 
   @price_lookup = {
     "A" => 50, "B" => 30, "C" => 20, "D" => 15, "E" => 40, "F" => 10,
@@ -36,6 +29,7 @@ class Checkout
     { items: { "V" => 2 }, discount: 10 },
   ]
 
+
   class << self
     attr_accessor :price_lookup, :discounts
   end
@@ -50,6 +44,21 @@ class Checkout
         total_discount += discount[:discount]
       end
     end
+
+    # Group offers :'(
+    total_group_items = %w[S T X Y Z].map { |sku| sku_hash[sku] }.sum
+    
+
+
+    # +------+-------+------------------------+
+    # | Item | Price | Special offers         |
+    # | S    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
+    # | T    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
+    # | X    | 17    | buy any 3 of (S,T,X,Y,Z) for 45 |
+    # | Y    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
+    # | Z    | 21    | buy any 3 of (S,T,X,Y,Z) for 45 |
+
+
 
     total_discount
   end
@@ -67,6 +76,7 @@ class Checkout
     end
   end
 end
+
 
 
 
