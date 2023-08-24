@@ -46,8 +46,11 @@ class Checkout
     end
 
     # Group offers :'(
-    total_group_items = %w[S T X Y Z].map { |sku| sku_hash[sku] }.sum
-    
+    total_group_items_to_discount = (%w[S T X Y Z].map { |sku| sku_hash[sku] || 0 }.sum) / 3
+    z_to_discount = [total_group_items_to_discount, sku_hash["Z"]].min
+    sty_to_discount = [total_group_items_to_discount, sku_hash["S"] + sku_hash["T"] + sku_hash["Y"]].min
+
+
 
 
     # +------+-------+------------------------+
@@ -76,6 +79,7 @@ class Checkout
     end
   end
 end
+
 
 
 

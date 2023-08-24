@@ -69,6 +69,16 @@ class ClientTest < Minitest::Test
     assert_equal(40, chk.checkout("F" * 6))
   end
 
+  def test_group_discount
+    chk = Checkout.new
+
+    assert_equal(45, chk.checkout("SSS"))
+    assert_equal(45, chk.checkout("STY"))
+    assert_equal(45, chk.checkout("ZZZ"))
+    assert_equal(45, chk.checkout("STZ"))
+    assert_equal(65, chk.checkout("ZSTZ"))
+  end
+
   def test_checkout_for_unusual_ordering
     chk = Checkout.new
     expected = chk.class.price_lookup["A"] * 2 + chk.class.price_lookup["B"] * 1
@@ -86,3 +96,4 @@ class ClientTest < Minitest::Test
   end
 
 end
+
