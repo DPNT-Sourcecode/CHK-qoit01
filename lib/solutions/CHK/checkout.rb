@@ -17,35 +17,17 @@ class Checkout
     "D" => 15
   }
 
-  @discounts = {
-    "A" => [{ quantity: 3, discount: 20 }],
-    "B" => [{ quantity: 2, discount: 15 }],
-    "C" => [],
-    "D" => [],
-  }
-
   class << self
-    attr_accessor :price_lookup, :discounts
+    attr_accessor :price_lookup,
   end
 
   def basket_discounts(sku_hash)
     total_discount = 0
 
-    total_discount += 20 * (sku_hash["A"] || 0) / 3
-    total_discount += 30 * (sku_hash["B"] || 0) / 2
+    total_discount += 20 * ((sku_hash["A"] || 0) / 3)
+    total_discount += 15 * ((sku_hash["B"] || 0) / 2)
 
-    # applicable_discount = self.class.discounts[item]
-    # discount = applicable_discount ? applicable_discount[:discount] * (quantity / applicable_discount[:quantity]) : 0
-    #
-    # base_price - discount
-
-    puts "------"
-    puts sku_hash["A"]
-    puts (sku_hash["A"] || 0) / 3
-    puts sku_hash["B"]
-    puts (sku_hash["B"] || 0) / 2
-
-    puts total_discount
+    # puts total_discount
 
     total_discount
   end
@@ -63,6 +45,7 @@ class Checkout
     end
   end
 end
+
 
 
 
