@@ -18,13 +18,14 @@ class Checkout
   }
 
   class << self
-    attr_accessor :price_lookup,
+    attr_accessor :price_lookup
   end
 
   def basket_discounts(sku_hash)
     total_discount = 0
 
-    total_discount += 20 * ((sku_hash["A"] || 0) / 3)
+    total_discount += 50 * ((sku_hash["A"] || 0) / 5)
+    total_discount += 20 * ((sku_hash["A"] % 5 || 0) / 3)
     total_discount += 15 * ((sku_hash["B"] || 0) / 2)
 
     # puts total_discount
@@ -45,6 +46,7 @@ class Checkout
     end
   end
 end
+
 
 
 
