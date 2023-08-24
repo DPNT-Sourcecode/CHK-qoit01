@@ -6,7 +6,3 @@ class Hello
   end
 
 end
-
-
-
-
