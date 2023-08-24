@@ -18,8 +18,8 @@ class Checkout
   }
 
   @discounts = {
-    "A" => {quantity: 3, discount: 20},
-    "B" => {quantity: 2, discount: 15},
+    "A" => { quantity: 3, discount: 20 },
+    "B" => { quantity: 2, discount: 15 },
     "C" => nil,
     "D" => nil,
   }
@@ -38,10 +38,14 @@ class Checkout
   end
 
   def checkout(skus)
-    skus.split("").group_by { |sku| sku }
-      .filter { |sku| self.class.price_lookup.has_key?(sku) }
-      .map { |sku, v| price_for_item_quantity(sku, v.length) }
-      .sum || 0
+    sku_array = skus.split("").group_by { |sku| sku }
+
+    if sku_array.keys.all? { |sku| self.class.price_lookup.has_key?(sku) }
+      sku_array.map { |sku, v| price_for_item_quantity(sku, v.length) }.sum || 0
+    else
+      -1
+    end
   end
 
 end
+
