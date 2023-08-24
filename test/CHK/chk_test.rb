@@ -17,6 +17,7 @@ class ClientTest < Minitest::Test
   # | C    | 20    |                        |
   # | D    | 15    |                        |
   # | E    | 40    | 2E get one B free      |
+  # | F    | 10    | 2F get one F free      |
   #                                 +------+-------+------------------------+
 
 
@@ -57,6 +58,17 @@ class ClientTest < Minitest::Test
     assert_equal(320, chk.checkout("BBEEEEEEEE"))
   end
 
+  def test_F_discount
+    chk = Checkout.new
+
+    assert_equal(10, chk.checkout("F" * 1))
+    assert_equal(20, chk.checkout("F" * 2))
+    assert_equal(20, chk.checkout("F" * 3))
+    assert_equal(30, chk.checkout("F" * 4))
+    assert_equal(40, chk.checkout("F" * 5))
+    assert_equal(40, chk.checkout("F" * 6))
+  end
+
   def test_checkout_for_unusual_ordering
     chk = Checkout.new
     expected = chk.class.price_lookup["A"] * 2 + chk.class.price_lookup["B"] * 1
@@ -74,3 +86,4 @@ class ClientTest < Minitest::Test
   end
 
 end
+

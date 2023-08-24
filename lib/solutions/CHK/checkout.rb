@@ -6,7 +6,8 @@ class Checkout
     "B" => 30,
     "C" => 20,
     "D" => 15,
-    "E" => 40
+    "E" => 40,
+    "F" => 10
   }
 
   class << self
@@ -27,6 +28,7 @@ class Checkout
     total_discount += 50 * (sku_hash["A"] / 5) if sku_hash["A"]
     total_discount += 20 * ((sku_hash["A"] % 5 ) / 3) if sku_hash["A"]
     total_discount += 15 * (sku_hash["B"] / 2) if sku_hash["B"]
+    total_discount += 10 * (sku_hash["F"] / 3) if sku_hash["F"]
 
     # puts total_discount
 
@@ -46,5 +48,6 @@ class Checkout
     end
   end
 end
+
 
 
