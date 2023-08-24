@@ -54,8 +54,8 @@ class Checkout
     total_discount = 0
 
     self.class.discounts.map do |discount|
-      while discount[:items].all? { |sku, required_quantity| (sku_hash[:sku] || 0) >= required_quantity }
-        discount[:items].each { |sku, quantity| sku_hash[:sku] -= quantity }
+      while discount[:items].all? { |sku, required_quantity| (sku_hash[sku] || 0) >= required_quantity }
+        discount[:items].each { |sku, quantity| sku_hash[sku] -= quantity }
         total_discount += discount[:discount]
       end
     end
@@ -76,3 +76,4 @@ class Checkout
     end
   end
 end
+
