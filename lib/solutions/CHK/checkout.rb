@@ -19,7 +19,7 @@ class Checkout
 
   @discounts = {
     "A" => {quantity: 3, discount: 20},
-    "B" => {quantity: 2, discount: 5},
+    "B" => {quantity: 2, discount: 15},
     "C" => nil,
     "D" => nil,
   }
@@ -30,13 +30,11 @@ class Checkout
 
   def price_for_item_quantity(item, quantity)
     base_price = self.class.price_lookup[item] * quantity
-    discounts = self.class.discounts[item]
 
-    {}
+    applicable_discount = self.class.discounts[item]
+    discounts = applicable_discount[:discount] * (quantity / applicable_discount[:quantity]) if applicable_discount
 
-    # self.class.price_lookup
-
-
+    [base_price - (discounts || 0), 0].max
   end
 
   def checkout(skus)
@@ -44,6 +42,7 @@ class Checkout
   end
 
 end
+
 
 
 
