@@ -32,7 +32,9 @@ class ClientTest < Minitest::Test
     assert_equal(30, chk.checkout("DD"))
   end
 
-  def test_discounts_for_A
+  def test_A_discount
+    chk = Checkout.new
+
     assert_equal(50, chk.checkout("A" * 1))
     assert_equal(100, chk.checkout("A" * 2))
     assert_equal(130, chk.checkout("A" * 3))
@@ -43,6 +45,16 @@ class ClientTest < Minitest::Test
     assert_equal(330, chk.checkout("A" * 8))
     assert_equal(200 + 130 + 50, chk.checkout("A" * 9))
     assert_equal(400, chk.checkout("A" * 10))
+  end
+
+  def test_combined_BE_discount
+    chk = Checkout.new
+
+    assert_equal(45, chk.checkout("BB"))
+    assert_equal(80, chk.checkout("EE"))
+    assert_equal(80, chk.checkout("BEE"))
+    assert_equal(80 + 30, chk.checkout("BBEE"))
+    assert_equal(320, chk.checkout("BBEEEEEEEE"))
   end
 
   def test_checkout_for_unusual_ordering
@@ -62,10 +74,3 @@ class ClientTest < Minitest::Test
   end
 
 end
-
-
-
-
-
-
-

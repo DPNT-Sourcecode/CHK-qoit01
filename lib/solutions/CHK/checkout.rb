@@ -14,7 +14,8 @@ class Checkout
     "A" => 50,
     "B" => 30,
     "C" => 20,
-    "D" => 15
+    "D" => 15,
+    "E" => 40
   }
 
   class << self
@@ -24,9 +25,9 @@ class Checkout
   def basket_discounts(sku_hash)
     total_discount = 0
 
-    total_discount += 50 * ((sku_hash["A"] || 0) / 5)
-    total_discount += 20 * ((sku_hash["A"] % 5 || 0) / 3)
-    total_discount += 15 * ((sku_hash["B"] || 0) / 2)
+    total_discount += 50 * (sku_hash["A"] / 5) if sku_hash["A"]
+    total_discount += 20 * ((sku_hash["A"] % 5 ) / 3) if sku_hash["A"]
+    total_discount += 15 * (sku_hash["B"] / 2) if sku_hash["B"]
 
     # puts total_discount
 
@@ -46,11 +47,3 @@ class Checkout
     end
   end
 end
-
-
-
-
-
-
-
-
