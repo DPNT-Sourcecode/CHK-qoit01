@@ -10,7 +10,7 @@ class Checkout
   # | D    | 15    |                |
   # +------+-------+----------------+
 
-  price_lookup = {
+  @price_lookup = {
     "A": 50,
     "B": 30,
     "C": 20,
@@ -20,6 +20,8 @@ class Checkout
   def price_for_item_quantity(item, quantity)
     {}
 
+    @price_lookup[item] * quantity
+
   end
 
   def checkout(skus)
@@ -27,4 +29,5 @@ class Checkout
   end
 
 end
+
 
