@@ -17,10 +17,14 @@ class Checkout
     "D": 15
   }
 
+  class << self
+    attr_accessor :price_lookup
+  end
+
   def price_for_item_quantity(item, quantity)
     {}
 
-    @price_lookup[item] * quantity
+    self.class.price_lookup[item] * quantity
 
   end
 
@@ -29,5 +33,6 @@ class Checkout
   end
 
 end
+
 
 
