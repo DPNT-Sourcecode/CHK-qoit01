@@ -22,7 +22,7 @@ class ClientTest < Minitest::Test
 
     assert_equal(50, chk.price_for_item_quantity("A", 1))
     assert_equal(100, chk.price_for_item_quantity("A", 2))
-    assert_equal(150, chk.price_for_item_quantity("A", 3))
+    assert_equal(130, chk.price_for_item_quantity("A", 3))
     assert_equal(130 + 130 + 50, chk.price_for_item_quantity("A", 7))
     assert_equal(30, chk.price_for_item_quantity("B", 1))
     assert_equal(60, chk.price_for_item_quantity("B", 2))
@@ -31,7 +31,9 @@ class ClientTest < Minitest::Test
     assert_equal(40, chk.price_for_item_quantity("C", 2))
     assert_equal(15, chk.price_for_item_quantity("D", 1))
     assert_equal(30, chk.price_for_item_quantity("D", 2))
+    assert_equal(0, chk.price_for_item_quantity("D", -1))
   end
 
 end
+
 

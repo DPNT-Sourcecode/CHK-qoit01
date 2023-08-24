@@ -11,10 +11,10 @@ class Checkout
   # +------+-------+----------------+
 
   @price_lookup = {
-    "A": 50,
-    "B": 30,
-    "C": 20,
-    "D": 15
+    "A" => 50,
+    "B" => 30,
+    "C" => 20,
+    "D" => 15
   }
 
   class << self
@@ -24,6 +24,7 @@ class Checkout
   def price_for_item_quantity(item, quantity)
     {}
 
+    # self.class.price_lookup
     self.class.price_lookup[item] * quantity
 
   end
@@ -33,6 +34,7 @@ class Checkout
   end
 
 end
+
 
 
 
