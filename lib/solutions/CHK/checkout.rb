@@ -38,7 +38,15 @@ class Checkout
     # discount = applicable_discount ? applicable_discount[:discount] * (quantity / applicable_discount[:quantity]) : 0
     #
     # base_price - discount
-    p total_discount
+
+    puts "------"
+    puts sku_hash["A"]
+    puts (sku_hash["A"] || 0) / 3
+    puts sku_hash["B"]
+    puts (sku_hash["B"] || 0) / 2
+
+    puts total_discount
+
     total_discount
   end
 
@@ -55,6 +63,7 @@ class Checkout
     end
   end
 end
+
 
 
 
