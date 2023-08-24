@@ -1,15 +1,6 @@
 # noinspection RubyUnusedLocalVariable
 class Checkout
 
-  # +------+-------+------------------------+
-  # | Item | Price | Special offers         |
-  #   +------+-------+------------------------+
-  # | A    | 50    | 3A for 130, 5A for 200 |
-  # | B    | 30    | 2B for 45              |
-  # | C    | 20    |                        |
-  # | D    | 15    |                        |
-  # | E    | 40    | 2E get one B free      |
-
   @price_lookup = {
     "A" => 50,
     "B" => 30,
@@ -28,7 +19,7 @@ class Checkout
 
     if sku_hash["E"] && sku_hash["B"]
       max_b_to_remove = sku_hash["E"] / 2
-      b_to_remove = [max_b_to_remove, sku_hash["B"]].max
+      b_to_remove = [max_b_to_remove, sku_hash["B"]].min
       total_discount += b_to_remove * 30
       sku_hash["B"] -= b_to_remove
     end
@@ -55,4 +46,5 @@ class Checkout
     end
   end
 end
+
 
