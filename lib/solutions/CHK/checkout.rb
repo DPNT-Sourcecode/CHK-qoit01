@@ -34,14 +34,16 @@ class Checkout
     applicable_discount = self.class.discounts[item]
     discount = applicable_discount ? applicable_discount[:discount] * (quantity / applicable_discount[:quantity]) : 0
 
-    [base_price - discount, 0].max
+    base_price - discount
   end
 
   def checkout(skus)
+    skus.split("").group_by { |sku| sku }.map { |k, v| [k, v.]}
     raise 'Not implemented'
   end
 
 end
+
 
 
 
