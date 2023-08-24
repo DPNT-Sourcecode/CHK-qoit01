@@ -38,16 +38,10 @@ class Checkout
   end
 
   def checkout(skus)
-    skus.split("").group_by { |sku| sku }.map { |k, v| [k, v.]}
-    raise 'Not implemented'
+    skus.split("").group_by { |sku| sku }
+      .filter { |sku| self.class.price_lookup.has_key?(sku) }
+      .map { |sku, v| price_for_item_quantity(sku, v.length) }
+      .sum || 0
   end
 
 end
-
-
-
-
-
-
-
-

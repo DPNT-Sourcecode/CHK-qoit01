@@ -46,9 +46,9 @@ class ClientTest < Minitest::Test
     assert_equal(expected, chk.checkout("AFA"))
   end
 
+  def test_checkout_for_empty_input
+    chk = Checkout.new
+    assert_equal(0, chk.checkout(""))
+  end
+
 end
-
-
-
-
-
