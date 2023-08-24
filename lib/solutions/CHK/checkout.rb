@@ -39,16 +39,19 @@ class Checkout
     total_discount = 0
 
     self.class.discounts.map do |discount|
-      while discount[:items].all? { |sku, required_quantity| (sku_hash[sku] || 0) >= required_quantity }
+      while discount[:items].all? { |sku, required_quantity| sku_hash[sku] >= required_quantity }
         discount[:items].each { |sku, quantity| sku_hash[sku] -= quantity }
         total_discount += discount[:discount]
       end
     end
 
     # Group offers :'(
-    total_group_items_to_discount = (%w[S T X Y Z].map { |sku| sku_hash[sku] || 0 }.sum) / 3
+    total_group_items_to_discount = (%w[S T X Y Z].map { |sku| sku_hash[sku] }.sum) / 3
     z_to_discount = [total_group_items_to_discount, sku_hash["Z"]].min
-    sty_to_discount = [total_group_items_to_discount, sku_hash["S"] + sku_hash["T"] + sku_hash["Y"]].min
+    sty_to_discount = [total_group_items_to_discount - z_to_discount, sku_hash["S"] + sku_hash["T"] + sku_hash["Y"]].min
+    x_to_discount = [total_group_items_to_discount - z_to_discount - sty_to_discount, sku_hash["X"]].min
+    p [z_to_discount, sty_to_discount, x_to_discount]
+    # total_discount += (z_to_discount * 6 + sty_to_discount + 5 + x_to_discount * 2)
 
 
 
@@ -68,6 +71,7 @@ class Checkout
 
   def checkout(skus)
     sku_hash = skus.split("").group_by { |sku| sku }.map { |sku, v| [sku, v.length] }.to_h
+    sku_hash.default = 0
 
     if sku_hash.keys.all? { |sku| self.class.price_lookup.has_key?(sku) }
       base_price = sku_hash.map { |sku, quantity| self.class.price_lookup[sku] * quantity }.sum || 0
@@ -79,6 +83,7 @@ class Checkout
     end
   end
 end
+
 
 
 
