@@ -77,7 +77,7 @@ class ClientTest < Minitest::Test
 
   def test_checkout_for_unexpected_sku
     chk = Checkout.new
-    assert_equal(-1, chk.checkout("AXA"))
+    assert_equal(-1, chk.checkout("A*A"))
   end
 
   def test_checkout_for_empty_input
@@ -86,4 +86,3 @@ class ClientTest < Minitest::Test
   end
 
 end
-

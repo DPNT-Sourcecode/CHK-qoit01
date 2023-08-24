@@ -27,22 +27,22 @@ class Checkout
   }
 
   @discounts = [
-    { items: ["E" => 2, "B" => 1], discount: 30 },
-    { items: ["N" => 3, "M" => 1], discount: 15 },
-    { items: ["R" => 3, "Q" => 1], discount: 30 },
+    { items: { "E" => 2, "B" => 1 }, discount: 30 },
+    { items: { "N" => 3, "M" => 1 }, discount: 15 },
+    { items: { "R" => 3, "Q" => 1 }, discount: 30 },
 
-    { items: ["A" => 5], discount: 50 },
-    { items: ["A" => 3], discount: 20 },
-    { items: ["B" => 2], discount: 15 },
-    { items: ["F" => 3], discount: 10 },
-    { items: ["H" => 10], discount: 20 },
-    { items: ["H" => 5], discount: 5 },
-    { items: ["K" => 2], discount: 10 },
-    { items: ["P" => 5], discount: 50 },
-    { items: ["Q" => 3], discount: 10 },
-    { items: ["U" => 4], discount: 40 },
-    { items: ["V" => 3], discount: 130 },
-    { items: ["V" => 2], discount: 50 },
+    { items: { "A" => 5 }, discount: 50 },
+    { items: { "A" => 3 }, discount: 20 },
+    { items: { "B" => 2 }, discount: 15 },
+    { items: { "F" => 3 }, discount: 10 },
+    { items: { "H" => 10 }, discount: 20 },
+    { items: { "H" => 5 }, discount: 5 },
+    { items: { "K" => 2 }, discount: 10 },
+    { items: { "P" => 5 }, discount: 50 },
+    { items: { "Q" => 3 }, discount: 10 },
+    { items: { "U" => 4 }, discount: 40 },
+    { items: { "V" => 3 }, discount: 130 },
+    { items: { "V" => 2 }, discount: 50 },
   ]
 
   class << self
@@ -54,21 +54,10 @@ class Checkout
     total_discount = 0
 
     self.class.discounts.map do |discount|
-      while discount[:items].all? { |sku, required_quantity| sku_hash[:sku] >= required_quantity }
-
+      while discount[:items].all? { |sku, required_quantity| (sku_hash[:sku] || 0) >= required_quantity }
+        discount[:items].each { |sku, quantity| sku_hash[:sku] -= quantity }
         total_discount += discount[:discount]
-
       end
-
-
-    end
-
-
-    if sku_hash["E"] && sku_hash["B"]
-      max_b_to_remove = sku_hash["E"] / 2
-      b_to_remove = [max_b_to_remove, sku_hash["B"]].min
-      total_discount += b_to_remove * 30
-      sku_hash["B"] -= b_to_remove
     end
 
     total_discount
@@ -87,10 +76,3 @@ class Checkout
     end
   end
 end
-
-
-
-
-
-
-
