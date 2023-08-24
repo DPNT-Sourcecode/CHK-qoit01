@@ -5,6 +5,7 @@ Logging.logger.root.appenders = Logging.appenders.stdout
 
 require_solution 'CHK'
 
+#noinspection RubyInstanceMethodNamingConvention
 class ClientTest < Minitest::Test
 
 
@@ -33,7 +34,7 @@ class ClientTest < Minitest::Test
     assert_equal(30, chk.checkout("DD"))
   end
 
-  def test_checkout_for_arithmetic
+  def test_checkout_for_unusual_ordering
     chk = Checkout.new
     expected = chk.class.price_lookup["A"] * 2 + chk.class.price_lookup["B"] * 1
     assert_equal(expected, chk.checkout("ABA"))
@@ -51,6 +52,7 @@ class ClientTest < Minitest::Test
   end
 
 end
+
 
 
 
