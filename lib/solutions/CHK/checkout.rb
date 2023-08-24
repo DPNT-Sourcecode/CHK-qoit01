@@ -3,27 +3,18 @@ class Checkout
 
   # +------+-------+------------------------+
   # | Item | Price | Special offers         |
-  #   +------+-------+------------------------+
-  # | A    | 50    | 3A for 130, 5A for 200 | x
-  # | B    | 30    | 2B for 45              | x
-  # | E    | 40    | 2E get one B free      | x
-  # | F    | 10    | 2F get one F free      | x
-  # | H    | 10    | 5H for 45, 10H for 80  | x
-  # | K    | 80    | 2K for 150             | x
-  # | N    | 40    | 3N get one M free      | x
-  # | P    | 50    | 5P for 200             | x
-  # | Q    | 30    | 3Q for 80              | x
-  # | R    | 50    | 3R get one Q free      |
-  # | U    | 40    | 3U get one U free      | x
-  # | V    | 50    | 2V for 90, 3V for 130  | x
-  # +------+-------+------------------------+
+  # | S    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
+  # | T    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
+  # | X    | 17    | buy any 3 of (S,T,X,Y,Z) for 45 |
+  # | Y    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
+  # | Z    | 21    | buy any 3 of (S,T,X,Y,Z) for 45 |
 
   @price_lookup = {
     "A" => 50, "B" => 30, "C" => 20, "D" => 15, "E" => 40, "F" => 10,
-    "G" => 20, "H" => 10, "I" => 35, "J" => 60, "K" => 80, "L" => 90,
+    "G" => 20, "H" => 10, "I" => 35, "J" => 60, "K" => 70, "L" => 90,
     "M" => 15, "N" => 40, "O" => 10, "P" => 50, "Q" => 30, "R" => 50,
-    "S" => 30, "T" => 20, "U" => 40, "V" => 50, "W" => 20, "X" => 90,
-    "Y" => 10, "Z" => 50
+    "S" => 20, "T" => 20, "U" => 40, "V" => 50, "W" => 20, "X" => 17,
+    "Y" => 20, "Z" => 21
   }
 
   @discounts = [
@@ -37,7 +28,7 @@ class Checkout
     { items: { "F" => 3 }, discount: 10 },
     { items: { "H" => 10 }, discount: 20 },
     { items: { "H" => 5 }, discount: 5 },
-    { items: { "K" => 2 }, discount: 10 },
+    { items: { "K" => 2 }, discount: 20 },
     { items: { "P" => 5 }, discount: 50 },
     { items: { "Q" => 3 }, discount: 10 },
     { items: { "U" => 4 }, discount: 40 },
@@ -76,5 +67,6 @@ class Checkout
     end
   end
 end
+
 
 
