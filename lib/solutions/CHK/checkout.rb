@@ -41,8 +41,8 @@ class Checkout
     { items: { "P" => 5 }, discount: 50 },
     { items: { "Q" => 3 }, discount: 10 },
     { items: { "U" => 4 }, discount: 40 },
-    { items: { "V" => 3 }, discount: 130 },
-    { items: { "V" => 2 }, discount: 50 },
+    { items: { "V" => 3 }, discount: 20 },
+    { items: { "V" => 2 }, discount: 10 },
   ]
 
   class << self
@@ -76,4 +76,5 @@ class Checkout
     end
   end
 end
+
 
