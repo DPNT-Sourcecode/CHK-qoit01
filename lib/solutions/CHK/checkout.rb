@@ -17,15 +17,25 @@ class Checkout
     "D" => 15
   }
 
+  @discounts = {
+    "A" => {quantity: 3, discount: 20},
+    "B" => {quantity: 2, discount: 5},
+    "C" => nil,
+    "D" => nil,
+  }
+
   class << self
-    attr_accessor :price_lookup
+    attr_accessor :price_lookup, :discounts
   end
 
   def price_for_item_quantity(item, quantity)
+    base_price = self.class.price_lookup[item] * quantity
+    discounts = self.class.discounts[item]
+
     {}
 
     # self.class.price_lookup
-    self.class.price_lookup[item] * quantity
+
 
   end
 
@@ -34,6 +44,7 @@ class Checkout
   end
 
 end
+
 
 
 
