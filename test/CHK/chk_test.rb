@@ -17,21 +17,20 @@ class ClientTest < Minitest::Test
   # | D    | 15    |                |
   # +------+-------+----------------+
 
-  def test_price_for_item_quantity
+  def test_base_pricing
     chk = Checkout.new
 
-    assert_equal(50, chk.class.price_lookup["A"] * 1)
-    assert_equal(100, chk.class.price_lookup["A"] * 2)
-    assert_equal(130, chk.class.price_lookup["A"] * 3)
-    assert_equal(130 + 130 + 50, chk.class.price_lookup["A"] * 7)
-    assert_equal(30, chk.class.price_lookup["B"] * 1)
-    assert_equal(45, chk.class.price_lookup["B"] * 2)
-    assert_equal(45 + 30, chk.class.price_lookup["B"] * 3)
-    assert_equal(20, chk.class.price_lookup["C"] * 1)
-    assert_equal(40, chk.class.price_lookup["C"] * 2)
-    assert_equal(15, chk.class.price_lookup["D"] * 1)
-    assert_equal(30, chk.class.price_lookup["D"] * 2)
-    # assert_equal(0, chk.price_for_item_quantity("D", -1))
+    assert_equal(50, chk.checkout("A"))
+    assert_equal(100, chk.checkout("AA"))
+    assert_equal(130, chk.checkout("AAA"))
+    assert_equal(130 + 130 + 50, chk.checkout("AAAAAAA"))
+    assert_equal(30, chk.checkout("B"))
+    assert_equal(45, chk.checkout("BB"))
+    assert_equal(45 + 30, chk.checkout("BBB"))
+    assert_equal(20, chk.checkout("C"))
+    assert_equal(40, chk.checkout("CC"))
+    assert_equal(15, chk.checkout("D"))
+    assert_equal(30, chk.checkout("DD"))
   end
 
   def test_checkout_for_arithmetic
@@ -43,7 +42,7 @@ class ClientTest < Minitest::Test
   def test_checkout_for_unexpected_sku
     chk = Checkout.new
     expected = chk.class.price_lookup["A"] * 2
-    assert_equal(-1, chk.checkout("AFA"))
+    assert_equal(-1, chk.checkout("AXA"))
   end
 
   def test_checkout_for_empty_input
@@ -52,5 +51,6 @@ class ClientTest < Minitest::Test
   end
 
 end
+
 
 

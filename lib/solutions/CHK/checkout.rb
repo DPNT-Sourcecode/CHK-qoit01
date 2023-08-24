@@ -18,10 +18,10 @@ class Checkout
   }
 
   @discounts = {
-    "A" => { quantity: 3, discount: 20 },
-    "B" => { quantity: 2, discount: 15 },
-    "C" => nil,
-    "D" => nil,
+    "A" => [{ quantity: 3, discount: 20 }],
+    "B" => [{ quantity: 2, discount: 15 }],
+    "C" => [],
+    "D" => [],
   }
 
   class << self
@@ -29,10 +29,16 @@ class Checkout
   end
 
   def basket_discounts(sku_hash)
+    total_discount = 0
+
+    total_discount += 20 * sku_hash["A"] / 3
+    total_discount += 30 * sku_hash["B"] / 2
+
     # applicable_discount = self.class.discounts[item]
     # discount = applicable_discount ? applicable_discount[:discount] * (quantity / applicable_discount[:quantity]) : 0
     #
     # base_price - discount
+    total_discount
   end
 
   def checkout(skus)
@@ -49,6 +55,7 @@ class Checkout
   end
 
 end
+
 
 
 
