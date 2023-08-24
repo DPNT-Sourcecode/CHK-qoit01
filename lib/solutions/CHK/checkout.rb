@@ -34,6 +34,16 @@ class Checkout
     attr_accessor :price_lookup, :discounts
   end
 
+  def group_offer_discount(sku_hash)
+    total_group_items_to_discount = ((%w[S T X Y Z].map { |sku| sku_hash[sku] }.sum) / 3) * 3
+
+    z_to_discount = [total_group_items_to_discount, sku_hash["Z"]].min
+    sty_to_discount = [total_group_items_to_discount - z_to_discount, sku_hash["S"] + sku_hash["T"] + sku_hash["Y"]].min
+    x_to_discount = [total_group_items_to_discount - z_to_discount - sty_to_discount, sku_hash["X"]].min
+
+    z_to_discount * 6 + sty_to_discount * 5 + x_to_discount * 2
+  end
+
   def basket_discounts(sku_hash)
     sku_hash = sku_hash.clone
     total_discount = 0
@@ -45,28 +55,7 @@ class Checkout
       end
     end
 
-    # Group offers :'(
-    total_group_items_to_discount = (%w[S T X Y Z].map { |sku| sku_hash[sku] }.sum) / 3
-    z_to_discount = [total_group_items_to_discount, sku_hash["Z"]].min
-    sty_to_discount = [total_group_items_to_discount - z_to_discount, sku_hash["S"] + sku_hash["T"] + sku_hash["Y"]].min
-    x_to_discount = [total_group_items_to_discount - z_to_discount - sty_to_discount, sku_hash["X"]].min
-    p [z_to_discount, sty_to_discount, x_to_discount]
-    # total_discount += (z_to_discount * 6 + sty_to_discount + 5 + x_to_discount * 2)
-
-
-
-
-    # +------+-------+------------------------+
-    # | Item | Price | Special offers         |
-    # | S    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
-    # | T    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
-    # | X    | 17    | buy any 3 of (S,T,X,Y,Z) for 45 |
-    # | Y    | 20    | buy any 3 of (S,T,X,Y,Z) for 45 |
-    # | Z    | 21    | buy any 3 of (S,T,X,Y,Z) for 45 |
-
-
-
-    total_discount
+    total_discount + group_offer_discount(sku_hash)
   end
 
   def checkout(skus)
@@ -83,6 +72,7 @@ class Checkout
     end
   end
 end
+
 
 
 
